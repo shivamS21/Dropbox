@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { MongoDBFile } from '@/src/types/FileType';
 
 type FileUploadProps = {
-    onUpload: (file: any) => void
+    onUpload: (file: MongoDBFile) => void
 }
 
 export default function FileUpload({onUpload}: FileUploadProps) {
@@ -14,21 +15,29 @@ export default function FileUpload({onUpload}: FileUploadProps) {
         }
     }
     const handleFileUpload = async () => {
-        console.log('hi')
         if (!selectedFile) return;
-        console.log('hi2')
+        console.log('selected file', selectedFile)
 
         const formData = new FormData();
         formData.append('file', selectedFile);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/upload', formData, {
+            const response = await axios.post('http://localhost:5001/api/files/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
             });
+            console.log('printing response', response)
 
-            onUpload(response.data);
+            // Map the response data to a MongoDBFile object
+            const mongoFile: MongoDBFile = {
+                _id: response.data._id,
+                name: response.data.name,
+                path: response.data.path,
+                size: response.data.size,
+                mimeType: response.data.mimeType,
+            };
+            onUpload(mongoFile);
             setSelectedFile(null);
         } catch(e) {
             console.error('Error uploading file:', e);

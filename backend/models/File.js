@@ -6,4 +6,4 @@ const fileSchema = new mongoose.Schema({
     mimeType: {type: String, required: true},
 })
 
-export default mongoose.model('File', fileSchema);
+export default mongoose.model('MongoFile', fileSchema);
