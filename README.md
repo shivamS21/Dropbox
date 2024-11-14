@@ -91,7 +91,7 @@ This project implements a simplified Dropbox-like web application where users ca
 ### File Viewing
 
 - The following file types are allowed to be opened in a new tab:
-  - `jpeg`, `jpeg`, `jpg`, `png`, `gif`, `pdf`, and `json`.
+  - `jpeg`, `jpg`, `png`, `gif`, `pdf`, and `json`.
 - Unsupported file types will prompt an alert that the file cannot be viewed directly.
 
 ## API Endpoints
