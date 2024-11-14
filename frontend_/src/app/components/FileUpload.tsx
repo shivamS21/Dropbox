@@ -20,25 +20,46 @@ export default function FileUpload({ onUpload }: FileUploadProps) {
         fileInput?.click();
     };
 
-    // Handle file upload
     const handleFileUpload = async () => {
         if (!selectedFile) return;
-
+    
         const formData = new FormData();
         formData.append('file', selectedFile);
-
+    
         try {
             const response = await axios.post('http://localhost:5001/api/files/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            onUpload(response.data);
+            onUpload(response.data.file);
             setSelectedFile(null); // Clear the selected file after upload
-        } catch (e) {
-            console.error('Error uploading file:', e);
+        } catch (error: any) {
+            if (axios.isAxiosError(error)) {
+                if (error.response && typeof error.response.data === 'string') {
+                    // Extract error message from HTML
+                    const errorMessage = extractErrorMessage(error.response.data);
+                    if (errorMessage) {
+                        alert(errorMessage); // Show alert with the extracted error message
+                    } else {
+                        console.error('Unexpected error response:', error.response.data);
+                    }
+                } else {
+                    console.error('Unexpected error uploading file:', error.message);
+                }
+            } else {
+                console.error('Non-Axios error:', error);
+            }
+            setSelectedFile(null); // Reset selected file if upload fails
         }
     };
+    
+    // Function to extract error message from HTML response
+    function extractErrorMessage(html: string): string | null {
+        const match = html.match(/<pre>(.*?)<\/pre>/); // Look for <pre> tags
+        return match ? match[1] : null;
+    }
+    
 
     return (
         <div className="flex flex-col items-center mt-10">

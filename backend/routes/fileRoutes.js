@@ -38,7 +38,7 @@ function checkFileType(file, cb) {
     if (mimetype && extname) {
       return cb(null, true);
     } else {
-      cb('Error: Images only! (jpeg, jpg, png, gif)');
+      cb('Images only! (jpeg, jpg, png, gif)');
     }
 }
 router.route('/').get(getAllFiles);

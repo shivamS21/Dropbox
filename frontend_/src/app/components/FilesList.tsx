@@ -3,7 +3,7 @@ import { MongoDBFile } from '@/types/FileType';
 
 type FileListProps = {
     files: MongoDBFile[];
-    onFileClick: (file: MongoDBFile) => void; // Add the onClick handler to handle file viewing
+    onFileClick: (file: MongoDBFile) => void;
 };
 
 export default function FileList({ files, onFileClick }: FileListProps) {

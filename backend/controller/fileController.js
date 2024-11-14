@@ -1,12 +1,10 @@
 import asyncHandler from "express-async-handler";
 import MongoFile from "../models/File.js";
-// const fs = require('fs');
 import fs from 'fs'
 
 const getAllFiles = asyncHandler(async(req, res) => {
     try {
         const files = await MongoFile.find();
-        console.log("API files", files);
         res.status(200).json(files);
     } catch(e) {
         res.status(500).json({error: 'Failed to fetch files'});
@@ -24,7 +22,6 @@ const uploadFile = asyncHandler(async (req, res) => {
         console.log('file:', file);
 
         await file.save();
-        file['__v'] = 0;
         res.status(201).json(file); 
     } catch (e) {
         console.error(e);
