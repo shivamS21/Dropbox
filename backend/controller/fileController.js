@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import MongoFile from "../models/File.js";
-import fs from 'fs'
+import fs from 'fs';
+import path from 'path';
 
 const getAllFiles = asyncHandler(async(req, res) => {
     try {
@@ -19,8 +20,6 @@ const uploadFile = asyncHandler(async (req, res) => {
             size: req.file.size,
             mimeType: req.file.mimetype, 
         });
-        console.log('file:', file);
-
         await file.save();
         res.status(201).json(file); 
     } catch (e) {
@@ -36,19 +35,15 @@ const downloadFile = asyncHandler(async(req, res) => {
         if (!file) {
             return res.status(404).json({error: 'File not found!'});
         }
-        console.log(file.name, file.mimeType)
+
         res.set({
             'Access-Control-Expose-Headers': 'Content-Disposition',
             'Content-Disposition': `attachment; filename="${file.name}"`,
             'Content-Type': file.mimeType,
         });
-        console.log("Headers", res.getHeaders());
 
         const fileStream = fs.createReadStream(file.path);
-        // res.download(file.path);
         fileStream.pipe(res);
-        // var filestream = fs.createReadStream(file.name);
-        // filestream.pipe(res);
     } catch(e) {
         res.status(500).json({error: 'Failed to download file.'})
     }
@@ -58,15 +53,13 @@ const downloadFile = asyncHandler(async(req, res) => {
 const serveFile = asyncHandler(async (req, res) => {
     try {
         const file = await MongoFile.findById(req.params.id);
-        console.log('file obtained is', file);
         
         if (!file) {
             return res.status(404).json({ error: 'File not found!' });
         }
 
         // Resolve the full file path (using path.resolve for a cross-platform solution)
-        const filePath = path.resolve('uploads', file.path);  // Adjust the path accordingly
-        console.log('Resolved file path:', filePath);
+        const filePath = path.resolve(file.path); 
         
         // Set headers for file type to view it in a new tab
         res.set('Content-Type', file.mimeType);

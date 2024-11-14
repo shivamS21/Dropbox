@@ -6,7 +6,7 @@ import FilesList from "./components/FilesList";
 import { MongoDBFile } from "../types/FileType";
 import { useRouter } from "next/navigation";
 
-const allowedFileTypes = ['text/plain', 'image/jpeg', 'image/png', 'application/json'];
+const allowedFileTypes = ['image/jpeg', 'image/png', 'application/json', 'image/gif', 'application/pdf'];
 
 export default function Home() {
   const [files, setFiles] = useState<MongoDBFile[]>([]);
@@ -47,7 +47,7 @@ export default function Home() {
       </div>
       <div className="bg-cyan-50 pt-24 overflow-y-auto" style={{ height: 'calc(100vh - 80px)' }}>
         <div className="text-black text-xl flex flex-col items-center pt-2">
-          Store your images with safety.
+          Store your files with safety.
         </div>
         <FileUpload onUpload={handleFileUpload} />
         <FilesList files={files} onFileClick={handleFileClick} />

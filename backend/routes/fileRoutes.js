@@ -31,14 +31,15 @@ const upload = multer({
 // Check file type
 function checkFileType(file, cb) {
     console.log(file.originalname, file.mimetype)
-    const filetypes = /jpeg|jpg|png|gif/;
+    const filetypes = /jpeg|jpg|png|gif|pdf|json/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
+    console.log('shivam', mimetype, file.originalname, file.mimetype)
   
     if (mimetype && extname) {
       return cb(null, true);
     } else {
-      cb('Images only! (jpeg, jpg, png, gif)');
+      cb('These files only! (jpeg, jpg, png, gif, json, pdf)');
     }
 }
 router.route('/').get(getAllFiles);

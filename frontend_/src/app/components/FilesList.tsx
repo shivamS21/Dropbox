@@ -14,7 +14,6 @@ export default function FileList({ files, onFileClick }: FileListProps) {
             });
 
             const contentDisposition = response.headers['content-disposition'];
-            console.log('shivam sharma', contentDisposition)
 
             const fileName = contentDisposition
                                 ? contentDisposition.split('filename=')[1].replace(/"/g, '')
@@ -43,7 +42,7 @@ export default function FileList({ files, onFileClick }: FileListProps) {
                                 onClick={() => onFileClick(file)} 
                                 className="text-blue-500 cursor-pointer hover:underline font-medium"
                             >
-                                {file?.name||'shivam'}
+                                {file.name}
                             </span>
                             <button
                                 onClick={() => handleDownload(file._id)}
