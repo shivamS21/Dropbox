@@ -17,7 +17,7 @@ This project implements a simplified Dropbox-like web application where users ca
   - Supports file upload restrictions.
 - **Upload New File**: A button to allow users to upload files.
 - **View File**: Clicking a file opens the file contents in a new tab (only for supported file types).
-  - Supported file types: `txt`, `jpg`, `jpeg`, `png`, `json`, `pdf`, `gif`.
+  - Supported file types: `jpg`, `jpeg`, `png`, `json`, `pdf`, `gif`.
 
 ## Technologies Used
 
