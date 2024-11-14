@@ -13,10 +13,12 @@ export default function FileList({ files, onFileClick }: FileListProps) {
                 responseType: 'blob',
             })
 
-            const contentDisposition = response.headers['content-disposition'];
+            const contentDisposition = response.headers['Content-Disposition'];
+            console.log('shivam sharma', contentDisposition)
             const fileName = contentDisposition
-                                ? contentDisposition.split('filename=')[1].replace(/"/g, '')
+                                ? contentDisposition.split('filename=')[1].replace(/UTF-8''/, '').trim()
                                 : 'file';
+            console.log('filename ', fileName)
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
             console.log(url, response.data);

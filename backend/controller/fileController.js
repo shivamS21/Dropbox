@@ -36,11 +36,14 @@ const downloadFile = asyncHandler(async(req, res) => {
         if (!file) {
             return res.status(404).json({error: 'File not found!'});
         }
-
+        console.log(file.name, file.mimeType)
         res.set({
-            'Content-Disposition': `attachment; filename="${file.name}"`,
+            'Access-Control-Expose-Headers': 'Content-Disposition',
+            'Content-Disposition': `attachment; filename="${file.name}"; filename*=UTF-8''${encodeURIComponent(file.name)}`,
             'Content-Type': file.mimeType,
         });
+        console.log("Headers", res.getHeaders());
+
         const fileStream = fs.createReadStream(file.path);
         // res.download(file.path);
         fileStream.pipe(res);

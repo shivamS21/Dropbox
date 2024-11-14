@@ -41,7 +41,7 @@ export default function FileList({ files, onFileClick }: FileListProps) {
                                 onClick={() => onFileClick(file)} 
                                 className="text-blue-500 cursor-pointer hover:underline font-medium"
                             >
-                                {file.name}
+                                {file?.name||'shivam'}
                             </span>
                             <button
                                 onClick={() => handleDownload(file._id)}
