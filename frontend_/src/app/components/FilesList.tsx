@@ -14,6 +14,8 @@ export default function FileList({ files, onFileClick }: FileListProps) {
             });
 
             const contentDisposition = response.headers['content-disposition'];
+            console.log('shivam sharma', contentDisposition)
+
             const fileName = contentDisposition
                                 ? contentDisposition.split('filename=')[1].replace(/"/g, '')
                                 : 'file';

@@ -39,7 +39,7 @@ const downloadFile = asyncHandler(async(req, res) => {
         console.log(file.name, file.mimeType)
         res.set({
             'Access-Control-Expose-Headers': 'Content-Disposition',
-            'Content-Disposition': `attachment; filename="${file.name}"; filename*=UTF-8''${encodeURIComponent(file.name)}`,
+            'Content-Disposition': `attachment; filename="${file.name}"`,
             'Content-Type': file.mimeType,
         });
         console.log("Headers", res.getHeaders());
@@ -54,4 +54,35 @@ const downloadFile = asyncHandler(async(req, res) => {
     }
 })
 
-export default {getAllFiles, uploadFile, downloadFile};
+// Serve file for viewing (in new tab)
+const serveFile = asyncHandler(async (req, res) => {
+    try {
+        const file = await MongoFile.findById(req.params.id);
+        console.log('file obtained is', file);
+        
+        if (!file) {
+            return res.status(404).json({ error: 'File not found!' });
+        }
+
+        // Resolve the full file path (using path.resolve for a cross-platform solution)
+        const filePath = path.resolve('uploads', file.path);  // Adjust the path accordingly
+        console.log('Resolved file path:', filePath);
+        
+        // Set headers for file type to view it in a new tab
+        res.set('Content-Type', file.mimeType);
+
+        // Send the file as a response to the browser
+        res.sendFile(filePath, (err) => {
+            if (err) {
+                console.error('Error sending file:', err);
+                res.status(500).json({ error: 'Failed to serve file.' });
+            }
+        });
+    } catch (e) {
+        console.error('Error in serving file:', e);
+        res.status(500).json({ error: 'Failed to serve file.' });
+    }
+});
+
+
+export default {getAllFiles, uploadFile, downloadFile, serveFile};

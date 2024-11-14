@@ -30,15 +30,15 @@ export default function Home() {
   };
 
   const handleFileClick = (file: MongoDBFile) => {
-    // Check if the file type is allowed to be displayed in the browser
     if (allowedFileTypes.includes(file.mimeType)) {
-      // For viewable files (like .txt, .jpg, .png, .json), open the file in a new tab
-      router.push(`/file/${file._id}`);
+      // Assuming the server has a route to serve files by their ID
+      const fileUrl = `http://localhost:5001/api/files/${file._id}`;
+      window.open(fileUrl, "_blank"); // Opens the file in a new tab
     } else {
-      // For unsupported files, either show an alert or download them
       alert('This file format cannot be viewed directly.');
     }
   };
+  
 
   return (
     <div className="w-full h-screen flex flex-col">
@@ -47,7 +47,7 @@ export default function Home() {
       </div>
       <div className="bg-cyan-50 pt-24 overflow-y-auto" style={{ height: 'calc(100vh - 80px)' }}>
         <div className="text-black text-xl flex flex-col items-center pt-2">
-          Store your files with safety.
+          Store your images with safety.
         </div>
         <FileUpload onUpload={handleFileUpload} />
         <FilesList files={files} onFileClick={handleFileClick} />
