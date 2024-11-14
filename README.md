@@ -42,7 +42,7 @@ This project implements a simplified Dropbox-like web application where users ca
 
 1. **Clone the Repository**:
     ```bash
-    git clone [<repository_url>](https://github.com/shivamS21/dropbox.git)
+    git clone (https://github.com/shivamS21/dropbox.git)
     cd dropbox
     ```
 
