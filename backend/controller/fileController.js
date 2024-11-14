@@ -3,6 +3,11 @@ import MongoFile from "../models/File.js";
 import fs from 'fs';
 import path from 'path';
 
+/** 
+ * @desc Get all Files
+ * @route GET /api/files
+ * @access public
+ */
 const getAllFiles = asyncHandler(async(req, res) => {
     try {
         const files = await MongoFile.find();
@@ -12,6 +17,11 @@ const getAllFiles = asyncHandler(async(req, res) => {
     }
 })
 
+/** 
+ * @desc Upload a file
+ * @route POST /api/files/upload
+ * @access public
+ */
 const uploadFile = asyncHandler(async (req, res) => {
     try {
         const file = new MongoFile({
@@ -28,7 +38,11 @@ const uploadFile = asyncHandler(async (req, res) => {
     }
 });
 
-
+/** 
+ * @desc Download a file
+ * @route GET /api/files/download/:id
+ * @access public
+ */
 const downloadFile = asyncHandler(async(req, res) => {
     try {
         const file = await MongoFile.findById(req.params.id);
@@ -49,7 +63,11 @@ const downloadFile = asyncHandler(async(req, res) => {
     }
 })
 
-// Serve file for viewing (in new tab)
+/** 
+ * @desc Open the file in new tab
+ * @route GET /api/files/:id
+ * @access public
+ */
 const serveFile = asyncHandler(async (req, res) => {
     try {
         const file = await MongoFile.findById(req.params.id);
@@ -58,7 +76,7 @@ const serveFile = asyncHandler(async (req, res) => {
             return res.status(404).json({ error: 'File not found!' });
         }
 
-        // Resolve the full file path (using path.resolve for a cross-platform solution)
+        // Resolve the full file path
         const filePath = path.resolve(file.path); 
         
         // Set headers for file type to view it in a new tab

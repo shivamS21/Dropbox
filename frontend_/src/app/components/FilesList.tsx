@@ -25,7 +25,7 @@ export default function FileList({ files, onFileClick }: FileListProps) {
             link.setAttribute('download', fileName);
             document.body.appendChild(link);
             link.click();
-            window.URL.revokeObjectURL(url);
+            window.URL.revokeObjectURL(url); 
         } catch (error) {
             console.error('Error downloading file:', error);
         }

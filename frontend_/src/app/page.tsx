@@ -4,13 +4,11 @@ import axios from 'axios';
 import FileUpload from "./components/FileUpload";
 import FilesList from "./components/FilesList";
 import { MongoDBFile } from "../types/FileType";
-import { useRouter } from "next/navigation";
 
 const allowedFileTypes = ['image/jpeg', 'image/png', 'application/json', 'image/gif', 'application/pdf'];
 
 export default function Home() {
   const [files, setFiles] = useState<MongoDBFile[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
     const filesFetched = async () => {
@@ -29,13 +27,12 @@ export default function Home() {
     setFiles((prevFiles) => [...prevFiles, newFile]);
   };
 
-  const handleFileClick = (file: MongoDBFile) => {
+  const handleFileOpen = (file: MongoDBFile) => {
     if (allowedFileTypes.includes(file.mimeType)) {
-      
       const fileUrl = `http://localhost:5001/api/files/${file._id}`;
       window.open(fileUrl, "_blank"); // Opens the file in a new tab
     } else {
-      alert('This file format cannot be viewed directly.');
+      alert('This file format cannot be viewed.');
     }
   };
   
@@ -47,10 +44,10 @@ export default function Home() {
       </div>
       <div className="bg-cyan-50 pt-24 overflow-y-auto" style={{ height: 'calc(100vh - 80px)' }}>
         <div className="text-black text-xl flex flex-col items-center pt-2">
-          Store your files with safety.
+          Store your files with safety at Dropbox
         </div>
         <FileUpload onUpload={handleFileUpload} />
-        <FilesList files={files} onFileClick={handleFileClick} />
+        <FilesList files={files} onFileClick={handleFileOpen} />
       </div>
     </div>
   );

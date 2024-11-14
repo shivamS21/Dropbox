@@ -14,12 +14,6 @@ export default function FileUpload({ onUpload }: FileUploadProps) {
         }
     };
 
-    // Trigger the file input
-    const handleFileInputClick = () => {
-        const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-        fileInput?.click();
-    };
-
     const handleFileUpload = async () => {
         if (!selectedFile) return;
     
@@ -54,11 +48,11 @@ export default function FileUpload({ onUpload }: FileUploadProps) {
         }
     };
     
-    // Function to extract error message from HTML response
-    function extractErrorMessage(html: string): string | null {
+    // Extract error message from HTML response(error.response.data)
+    const extractErrorMessage = (html: string): string | null => {
         const match = html.match(/<pre>(.*?)<\/pre>/); // Look for <pre> tags
         return match ? match[1] : null;
-    }
+    };
     
 
     return (
