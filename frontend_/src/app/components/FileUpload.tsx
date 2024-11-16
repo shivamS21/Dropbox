@@ -3,9 +3,10 @@ import axios from 'axios';
 
 type FileUploadProps = {
     onUpload: (file: any) => void;
+    cwd: string;
 };
 
-export default function FileUpload({ onUpload }: FileUploadProps) {
+export default function FileUpload({ onUpload, cwd }: FileUploadProps) {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,18 +15,13 @@ export default function FileUpload({ onUpload }: FileUploadProps) {
         }
     };
 
-    // Trigger the file input
-    const handleFileInputClick = () => {
-        const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-        fileInput?.click();
-    };
-
     const handleFileUpload = async () => {
         if (!selectedFile) return;
     
         const formData = new FormData();
+        formData.append('cwd', cwd);
         formData.append('file', selectedFile);
-    
+
         try {
             const response = await axios.post('http://localhost:5001/api/files/upload', formData, {
                 headers: {
@@ -54,11 +50,11 @@ export default function FileUpload({ onUpload }: FileUploadProps) {
         }
     };
     
-    // Function to extract error message from HTML response
-    function extractErrorMessage(html: string): string | null {
+    // Extract error message from HTML response(error.response.data)
+    const extractErrorMessage = (html: string): string | null => {
         const match = html.match(/<pre>(.*?)<\/pre>/); // Look for <pre> tags
         return match ? match[1] : null;
-    }
+    };
     
 
     return (

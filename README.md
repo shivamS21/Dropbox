@@ -17,7 +17,7 @@ This project implements a simplified Dropbox-like web application where users ca
   - Supports file upload restrictions.
 - **Upload New File**: A button to allow users to upload files.
 - **View File**: Clicking a file opens the file contents in a new tab (only for supported file types).
-  - Supported file types: `txt`, `jpg`, `jpeg`, `png`, `json`, `pdf`, `gif`.
+  - Supported file types: `jpg`, `jpeg`, `png`, `json`, `pdf`, `gif`.
 
 ## Technologies Used
 
@@ -42,7 +42,7 @@ This project implements a simplified Dropbox-like web application where users ca
 
 1. **Clone the Repository**:
     ```bash
-    git clone (https://github.com/shivamS21/dropbox.git)
+    git clone https://github.com/shivamS21/dropbox.git
     cd dropbox
     ```
 
@@ -91,7 +91,7 @@ This project implements a simplified Dropbox-like web application where users ca
 ### File Viewing
 
 - The following file types are allowed to be opened in a new tab:
-  - `jpeg`, `jpeg`, `jpg`, `png`, `gif`, `pdf`, and `json`.
+  - `jpeg`, `jpg`, `png`, `gif`, `pdf`, and `json`.
 - Unsupported file types will prompt an alert that the file cannot be viewed directly.
 
 ## API Endpoints
@@ -106,11 +106,11 @@ This project implements a simplified Dropbox-like web application where users ca
   - Retrieves a list of all files.
 
 ### Download a File
-- **GET /api/files/download/:id**
+- **GET /api/files/download/id**
   - Allows users to download a file by ID.
 
 ### Open File in a New Tab
-- **GET /api/files/:id**
+- **GET /api/files/id**
   - Allows users to view the file contents in a new tab (for supported file types).
 
 ## Backend File Upload Handling
