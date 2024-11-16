@@ -77,5 +77,20 @@ const serveFile = asyncHandler(async (req, res) => {
     }
 });
 
+// const deleteFile = asyncHandler(async (req, res) => {
+//     try {
+//         const file = await MongoFile.findById(req.params.id);
+
+//         if (!file) {
+//             return res.status(404).json({error: "File not found!"});
+//         }
+
+//         await MongoFile.deleteOne(file._id); // delete file from local storage
+
+//     } catch(e) {
+//         console.error('Error in serving file:', e);
+//         res.status(500).json({ error: 'Failed to serve file.' });
+//     }
+// })
 
 export default {getAllFiles, uploadFile, downloadFile, serveFile};

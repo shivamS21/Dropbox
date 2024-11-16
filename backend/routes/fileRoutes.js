@@ -48,4 +48,6 @@ router.route('/download/:id').get(downloadFile);
 
 router.route('/:id').get(serveFile); 
 
+// router.route('/delete/:id').get(deleteFile);
+
 export default router;
